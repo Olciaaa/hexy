@@ -1,0 +1,19 @@
+@font-face {
+	font-family: Allura;
+	src: url("fonts/Allura-Regular.otf");
+}
+@font-face {
+	font-family: Bellota;
+	src: url("fonts/Bellota-Light.otf");
+}
+html
+{
+    width: 100%;
+    height: 100%;
+}
+body{
+    background-color: rgba(218, 211, 224, 0.726);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}

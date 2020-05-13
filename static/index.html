@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="jquery.js"></script>
+    <script src="Net.js"></script>
+    <script src="Hex.js"></script>
+    <script src="Main.js"></script>
+    <title>Hexy</title>
+</head>
+<body>
+    <nav>
+        <select name="amount" id="amount">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+        </select>
+        <button id = "save">Zapisz lvl na serwerze</button>
+        <button id = "open">Wczytaj lvl z serwera</button>
+        <button class = "type" id = "wall">wall</button>
+        <button class = "type" id = "treasure">treasure</button>
+        <button class = "type" id = "light">light</button>
+        <button class = "type" id = "enemy">enemy</button>
+        <button onclick="window.location.href='/hex'" class = "type" id = "hex">go to hex</button>
+    </nav>
+    <div id = "text">
+
+    </div>
+    <main>
+
+    </main>
+</body>
+</html>

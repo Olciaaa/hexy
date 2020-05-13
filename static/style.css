@@ -1,0 +1,152 @@
+@font-face {
+	font-family: Allura;
+	src: url("fonts/Allura-Regular.otf");
+}
+@font-face {
+	font-family: Bellota;
+	src: url("fonts/Bellota-Light.otf");
+}
+html
+{
+    width: 100%;
+    height: 100%;
+}
+body{
+    background-color: rgba(218, 211, 224, 0.726);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+main
+{
+    position: relative;
+    margin-left: 45%;
+}
+#arrow
+{
+    color: aliceblue;
+    z-index: 10;
+    margin: 15px;
+    font-family: Allura;
+}
+nav
+{
+    position: relative;
+    float: left;
+    width: 18%;
+    background-color: #510028;
+    height: 100%;
+}
+#text
+{
+    position: relative;
+    float: left;
+    width: 25%;
+    height: 100%;
+    background-color: darkgray;
+}
+#amount
+{
+    position: absolute;
+    margin-left: 20%;
+    width: 50%;
+    font-size: large;
+    font-family: Allura;
+    text-align: center;
+}
+button
+{
+    position: absolute;
+    margin-left: 20%;
+    width: 50%;
+    font-size: large;
+    font-family: Allura;
+    text-align: center;
+}
+button:hover
+{
+    box-shadow:0px 0px 20px deeppink;
+}
+button:focus
+{
+    box-shadow:0px 0px 15px deeppink;
+    color: deeppink;
+}
+#save
+{
+    top: 40px;
+}
+#open
+{
+    top:100px;
+}
+#wall
+{
+    top: 160px;
+}
+#treasure
+{
+    top: 200px;
+}
+#light
+{
+    top: 240px;
+}
+#enemy
+{
+    top: 280px;
+}
+#hex
+{
+    top: 320px;
+}
+/*styl hexów*/
+    .hexagon {
+        transform: rotate(-90deg);
+        position: absolute;
+        width: 100px; 
+        height: 57.74px;
+        background-color: #510028;
+        margin: 28.87px 0;
+        box-shadow: 0 0 20px rgba(0,0,0,0.45);
+    }
+    .hexagon:hover
+    {
+        box-shadow:0px 0px 15px deeppink;
+        border: 2px solid rgba(0, 191, 255, 0);
+    }
+    
+    .hexagon:before,
+    .hexagon:after {
+        content: "";
+        position: absolute;
+        z-index: -3;
+        width: 70.71px;
+        height: 70.71px;
+        -webkit-transform: scaleY(0.5774) rotate(-45deg);
+        -ms-transform: scaleY(0.5774) rotate(-45deg);
+        transform: scaleY(0.5774) rotate(-45deg);
+        background-color: inherit;
+        left: 14.6447px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.45);
+    }
+    
+    .hexagon:before {
+        top: -35.3553px;
+    }
+    
+    .hexagon:after {
+        bottom: -35.3553px;
+    }
+    
+    /*cover up extra shadows*/
+    .hexagon span {
+        display: block;
+        position: absolute;
+        top:0px;
+        left: 0;
+        width:100px;
+        height:57.7350px;
+        z-index: -2;
+        background: inherit;
+    }

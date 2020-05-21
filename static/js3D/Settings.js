@@ -2,12 +2,14 @@ var Settings = {
 
     zmiennaA: 20,
     zmiennaB: 30,
-    material1:new THREE.MeshBasicMaterial({
+    material1:new THREE.MeshPhongMaterial({
         color: 0x8768ff,
         side: THREE.DoubleSide,
+        specular: 0xffffff,
         wireframe: false,
-        transparent: true, 
-        opacity: 0.5
+        shininess: 50,
+        transparent: false
     }),
-    geometry1:new THREE.BoxGeometry(50, 100, 10)
+
+    radius: 60
 }

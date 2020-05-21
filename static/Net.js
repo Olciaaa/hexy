@@ -28,11 +28,11 @@ class Net{
                 data: {action:"open"}, // przykładowe dane
                 type: "POST",
                 success: function (data) {
-                   // console.log(data);
+                    console.log(data);
                     hex.creatingHex(data.size)
                     data.level.forEach(element => {
                         //console.log($("#" + element.id)[0]);
-                        hex.clickingHex(element.dir,$("#" + element.id));
+                        hex.clickingHex(element.dirIn,$("#" + element.id));
                         $("#" + element.id).click();
                     });
                 },

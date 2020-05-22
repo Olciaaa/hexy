@@ -193,7 +193,7 @@ class Hex{
             });
             this.type = "none";
         }
-        $("#text").text("size: " + this.hexes.size + "\n" + JSON.stringify(this.hexes.level))
+        $("#text").text("Aby drzwi były obrócone poprawnie, tył strzałki z wejściem powinien być skierowany w kierunku hexa z którego chcemy otrzymać drzwi."+"size: " + this.hexes.size + "\n" + JSON.stringify(this.hexes.level))
     }
 
 }

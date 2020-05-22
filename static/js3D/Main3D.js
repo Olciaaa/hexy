@@ -12,6 +12,7 @@ $(document).ready(function () {
     
     function init()
     {
+        let light = new Light();
         renderer = new THREE.WebGLRenderer( {antialias:true} );
         var width = window.innerWidth;
         var height = window.innerHeight;
@@ -25,9 +26,12 @@ $(document).ready(function () {
         //console.log(hexjs)
 
         scene.add(hexjs);
+        light.children[0].intensity = 5;
+        light.position.y = 60;
+        scene.add(light);
     
         camera = new THREE.PerspectiveCamera (45, width/height, 1, 10000);
-        camera.position.set(0,0,200);
+        camera.position.set(100,100,200);
         camera.lookAt(scene.position);
     
         controls = new THREE.OrbitControls (camera, renderer.domElement);

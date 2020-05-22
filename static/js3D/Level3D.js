@@ -2,7 +2,10 @@ class Level3D {
 
     constructor(){
        this.getData();
+       this.player()
        this.lights = [];
+       this.scene = new THREE.Scene();
+       this.playerModel;
     }
  
     getData(){
@@ -49,6 +52,7 @@ class Level3D {
        
        var scene, renderer, camera;
         var controls;
+        scene = this.scene;
         
         init();
         animate();
@@ -61,15 +65,13 @@ class Level3D {
             var height = window.innerHeight;
             renderer.setSize (width, height);
             document.body.appendChild (renderer.domElement);
-        
-            scene = new THREE.Scene();
 
             var axes = new THREE.AxesHelper(1000)
             scene.add(axes);
             //console.log(hexjs)
         
             camera = new THREE.PerspectiveCamera (45, width/height, 1, 10000);
-            camera.position.set(0,0,200);
+            camera.position.set(0,100,200);
             camera.lookAt(scene.position);
         
             controls = new THREE.OrbitControls (camera, renderer.domElement);
@@ -82,13 +84,15 @@ class Level3D {
 
                 var geometryy = new THREE.CylinderGeometry( Settings.radius, Settings.radius, 5, 6 );
                 var cylinder = new THREE.Mesh( geometryy, Settings.material1 );
-                cylinder.position.y = -50;
+                cylinder.position.y = -25;
                 cylinder.rotation.y = Math.PI / 2;
-                hexx.add( cylinder);
+                
                 //onsole.log(element.z.split("p")[0]);
                 hexx.position.x = element.x.split("p")[0];
                 hexx.position.z = element.z.split("p")[0];
-
+                cylinder.position.x = element.x.split("p")[0];
+                cylinder.position.z = element.z.split("p")[0];
+                scene.add( cylinder);
                 if(element.type == "light")
                 {
                     let lightt = light.clone();
@@ -121,21 +125,100 @@ class Level3D {
             requestAnimationFrame ( animate );  
             renderer.render (scene, camera);
         }
-        function render() {       
-            requestAnimationFrame(render);
+        var clickedVect = new THREE.Vector3(0,0,0); 
+
+        var directionVect = new THREE.Vector3(0,0,0);
         
-            // potwierdzenie w konsoli, że render się wykonuje
-        
-            console.log("render leci")
+        var raycaster = new THREE.Raycaster();
+        var mouseVector = new THREE.Vector2();
+
+        $(document).mousedown((event)=> {
+            //if(event.button == 2)
+            {
+                /*var geometry = new THREE.CubeGeometry( 5, 5, 5);
+                var material = new THREE.MeshBasicMaterial({
+                    color: 0x8888ff,
+                    side: THREE.DoubleSide,
+                    wireframe: false,
+                    transparent: true, 
+                    opacity: 0.5
+                });
+                let player = new THREE.Mesh(geometry, material);
+                scene.add(player)
+                console.log(this.playerModel)*/
+                let player = this.playerModel;
+                mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
+                mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
                 
-            renderer.render(scene, camera);
-        }
+                raycaster.setFromCamera(mouseVector, camera);
+                
+                var intersects = raycaster.intersectObjects(this.scene.children);
+        
+                if (intersects.length > 0) {
+        
+                clickedVect = intersects[0].point;
+        
+                directionVect = clickedVect.clone().sub(player.position).normalize()
+                console.log(directionVect);
+                
+                let distance = player.position.clone().distanceTo(clickedVect);
+                let posX = Math.abs(player.position.x) + distance;
+                let posZ = Math.abs(player.position.x) + distance;
+                //console.log(clickedVect);
+                //console.log()
+                let i = 0;
+                directionVect.x = -directionVect.x;
+                directionVect.z = -directionVect.z;
+
+                var angle = Math.atan2
+                (
+                    player.position.clone().x - directionVect.x,
+                    player.position.clone().z - directionVect.z
+                )
+
+                player.rotation.y = angle;
+                //player.position.x = clickedVect.x;
+                //player.position.z = clickedVect.z;
+                //directionVect.x = -directionVect.z;
+                //directionVect.z = directionVect.z/2
+                
+                function render() {      
+                    if(i < distance) 
+                    {
+                        requestAnimationFrame(render);
+                        i++;
+                        //console.log(i);
+                        //console.log(distance)
+                    }
+                    player.translateOnAxis(directionVect, 1)
+                    //console.log(directionVect);
+                    //console.log(player.position)
+                    //camera.position.x = player.position.x
+                    //camera.position.z = player.position.z + 50
+                    //camera.position.y = player.position.y + 50
+                    //camera.lookAt(player.position)
+                    renderer.render(scene, camera);
+                }
+                render()
+                }
+            }
+        })
         // tu wygeneruj level (ściany, światła, itemy) na podstawie danych zwracanych z serwera
         // i
         // - albo zwróć je do sceny w kontenerze
         // - albo wstaw bezpośrednio do sceny, przekazanej w konstruktorze klasy Level3D
         }
- 
+    player()
+    {
+        this.playerModel;
+        model.loadModel("player/tris.js", (modeldata)=>{
+            console.log("model został załadowany", modeldata)
+            console.log(this.scene)
+            this.scene.add(modeldata) // data to obiekt kontenera zwrócony z Model.js
+            this.playerModel = modeldata
+        })
+        
+    }
    
  
  }

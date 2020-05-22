@@ -33,6 +33,28 @@ $(document).ready(function () {
 
         var axes = new THREE.AxesHelper(1000)
         scene.add(axes);
+
+        /*var modelMaterial = new THREE.MeshBasicMaterial(
+            {
+                map: new THREE.TextureLoader().load("mario/mario2.jpg"),
+                morphTargets: true // ta własność odpowiada za możliwość animowania materiału modelu
+            });
+    
+            var loader = new THREE.JSONLoader();
+    
+            loader.load('mario/mario.js', (geometry)=> {
+               console.log("tralala")
+               meshModel = new THREE.Mesh(geometry, modelMaterial)
+               meshModel.name = "name";
+               meshModel.rotation.y = -10; // ustaw obrót modelu
+               meshModel.position.y = 0; // ustaw pozycje modelu
+               meshModel.position.x = 0;
+               meshModel.position.z = 0;
+               meshModel.scale.set(5,5,5); // ustaw skalę modelu
+          
+                scene.add(meshModel)
+            })*/
+
         player.container.position.y = 2.5;
         scene.add(player.container)
     
@@ -91,8 +113,8 @@ $(document).ready(function () {
 
                 var angle = Math.atan2
                 (
-                    player.getPlayerCont().position.clone().x - clickedVect.x,
-                    player.getPlayerCont().position.clone().z - clickedVect.z
+                    -player.getPlayerCont().position.clone().x + clickedVect.x,
+                    -player.getPlayerCont().position.clone().z + clickedVect.z
                 )
                 console.log(angle);
                 console.log(player.getPlayerCont())

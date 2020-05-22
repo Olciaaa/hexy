@@ -7,7 +7,7 @@ class Hex3D {
        //var radius = 100 // zmienna wielkość hexagona, a tym samym całego labiryntu
 
        let container = new THREE.Object3D() // kontener na obiekty 3D
-        var geometry = new THREE.BoxGeometry(Settings.radius, 100, 7)
+        var geometry = new THREE.BoxGeometry(Settings.radius, 50, 7)
        var wall = new THREE.Mesh(geometry, Settings.material1); // prostopadłościan - ściana hex-a
 
        for (var i = 0; i < 6; i++) {

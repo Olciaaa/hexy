@@ -21,6 +21,9 @@ app.get("/game", function (req, res) {
 app.get("/movement", function (req, res) {
     res.sendFile(path.join(__dirname + "/static/movement.html")) 
 })
+app.get("/ally", function (req, res) {
+    res.sendFile(path.join(__dirname + "/static/ally.html")) 
+})
 
 app.post("/dane", function (req, res) {
     let level =JSON.parse(req.body.level)

@@ -21,7 +21,7 @@ class Model {
             console.log("tralala");
             var meshModel = new THREE.Mesh(geometry, modelMaterial)
             meshModel.name = "name";
-            meshModel.rotation.y = -10; // ustaw obrót modelu
+            meshModel.rotation.y = Math.PI/2; // ustaw obrót modelu
             meshModel.position.y = 0; // ustaw pozycje modelu
             meshModel.position.x = 0;
             meshModel.position.z = 0;
@@ -37,7 +37,7 @@ class Model {
             container.add(axes)
              
              container.add(meshModel)
- 
+             //container.rotation.y = Math.PI/2;
              // zwrócenie kontenera
  
              callback(container); 

@@ -6,6 +6,7 @@ class Level3D {
        this.lights = [];
        this.scene = new THREE.Scene();
        this.playerModel;
+       this.modelCont;
     }
  
     getData(){
@@ -71,7 +72,7 @@ class Level3D {
             //console.log(hexjs)
         
             camera = new THREE.PerspectiveCamera (45, width/height, 1, 10000);
-            camera.position.set(0,100,200);
+            camera.position.set(0,100,100);
             camera.lookAt(scene.position);
         
             controls = new THREE.OrbitControls (camera, renderer.domElement);
@@ -121,7 +122,7 @@ class Level3D {
 
         function animate()
         {
-            controls.update();
+            //controls.update();
             requestAnimationFrame ( animate );  
             renderer.render (scene, camera);
         }
@@ -147,6 +148,7 @@ class Level3D {
                 scene.add(player)
                 console.log(this.playerModel)*/
                 let player = this.playerModel;
+                //player.rotation.y = Math.PI/2;
                 mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
                 mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
                 
@@ -167,20 +169,27 @@ class Level3D {
                 //console.log(clickedVect);
                 //console.log()
                 let i = 0;
-                directionVect.x = -directionVect.x;
-                directionVect.z = -directionVect.z;
+                //directionVect.x = -directionVect.x;
+                //directionVect.z = -directionVect.z;
+                //directionVect.rotate.y = Math.PI/2
+                directionVect.z = directionVect.z //+ Math.PI/2
+                directionVect.x = directionVect.x //+ Math.PI/2;
+                directionVect.y = player.position.y
 
                 var angle = Math.atan2
                 (
-                    player.position.clone().x - directionVect.x,
-                    player.position.clone().z - directionVect.z
+                    player.position.clone().x - clickedVect.x,
+                    player.position.clone().z - clickedVect.z
                 )
+                console.log(this.modelCont);
+                console.log(this.playerModel);
 
-                player.rotation.y = angle;
+                player.children[1].rotation.y = angle;
+                player.children[0].rotation.y = angle;
                 //player.position.x = clickedVect.x;
                 //player.position.z = clickedVect.z;
-                //directionVect.x = -directionVect.z;
-                //directionVect.z = directionVect.z/2
+                //directionVect.x = directionVect.x + Math.PI/2
+                let model = this.modelCont;
                 
                 function render() {      
                     if(i < distance) 
@@ -190,13 +199,13 @@ class Level3D {
                         //console.log(i);
                         //console.log(distance)
                     }
-                    player.translateOnAxis(directionVect, 1)
+                    model.translateOnAxis(directionVect, 1)
                     //console.log(directionVect);
                     //console.log(player.position)
-                    //camera.position.x = player.position.x
-                    //camera.position.z = player.position.z + 50
-                    //camera.position.y = player.position.y + 50
-                    //camera.lookAt(player.position)
+                    camera.position.x = player.position.x
+                    camera.position.z = player.position.z + 100
+                    camera.position.y = player.position.y + 100
+                    camera.lookAt(player.position)
                     renderer.render(scene, camera);
                 }
                 render()
@@ -213,11 +222,15 @@ class Level3D {
         this.playerModel;
         model.loadModel("player/tris.js", (modeldata)=>{
             console.log("model został załadowany", modeldata)
-            console.log(this.scene)
+            console.log(this.scene);
+            console.log(modeldata)
             this.scene.add(modeldata) // data to obiekt kontenera zwrócony z Model.js
             this.playerModel = modeldata
         })
-        
+        console.log(model.container)
+        this.modelCont = model.container;
+        //model.container.rotation.y = Math.PI/2;
+        //
     }
    
  

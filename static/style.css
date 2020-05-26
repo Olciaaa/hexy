@@ -109,6 +109,10 @@ button:focus
 {
     top: 400px;
 }
+#ally
+{
+    top: 440px;
+}
 /*styl hexów*/
     .hexagon {
         transform: rotate(-90deg);

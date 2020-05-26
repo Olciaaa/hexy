@@ -7,8 +7,8 @@ class Light {
         light.position.set(0, 50, 0);
         var geometry = new THREE.BoxGeometry(6, 6, 6)
         var point = new THREE.Mesh(geometry, Settings.material2);
-        point.position.set(0,50,0);
-        light.intensity = 0.5;
+        point.position.set(0,40,0);
+        light.intensity = 1;
         
         container.add(light,point)
        return container;

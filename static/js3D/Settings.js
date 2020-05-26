@@ -25,6 +25,13 @@ var Settings = {
         wireframe: true,
         transparent: false
     }),
+    treasureMaterial:new THREE.MeshBasicMaterial({
+        color: 0x8768ff,
+        side: THREE.DoubleSide,
+        wireframe: true,
+        transparent: false,
+        map: new THREE.TextureLoader().load("pictures/skarb.jpg"),
+    }),
 
     radius: 60
 }

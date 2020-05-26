@@ -12,6 +12,7 @@ class Level3D {
        this.modelAllyClass = [];
        //this.modelAlly;
        this.whereAlly = [];
+       
     }
  
     getData(){
@@ -117,6 +118,15 @@ class Level3D {
                     console.log("enemy");
                     tymczasowa.push({"x":element.x.split("p")[0],"z":element.z.split("p")[0]})
                 }
+
+                else if(element.type == "treasure")
+                {
+                    var treasure = new Item();
+                    var treas = treasure.clone();
+                    treas.position.x = element.x.split("p")[0];
+                    treas.position.z = element.z.split("p")[0];
+                    scene.add(treas);
+                }
                 
                 scene.add(hexx);
                 //console.log(hexx);
@@ -212,11 +222,7 @@ class Level3D {
         var raycasterr = new THREE.Raycaster();
         var ring = new Ring()
         var ringIn = false;
-        $(document).mousemove((event)=> {
-            
-            // calculate mouse position in normalized device coordinates
-            // (-1 to +1) for both components
-        
+        $(document).mousemove((event)=> {        
             mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
             mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
             //console.log(mouseVector);

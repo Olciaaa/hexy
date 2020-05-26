@@ -31,25 +31,17 @@ class Model {
  
             container.add(axes)
              
-             container.add(meshModel);
-             //container.rotation.y = Math.PI/2;
-             // zwrócenie kontenera
+            container.add(meshModel);
  
-             callback(container); 
-             //this.model = meshModel;
+            callback(container); 
          });
      }
- 
- 
-    // update mixera
  
     updateModel () {
         //console.log(this.model)
         var delta = this.clock.getDelta();
          if (this.mixer) this.mixer.update(delta)
      }
- 
-    //animowanie postaci
  
      setAnimation (action) 
      {

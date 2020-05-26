@@ -3,6 +3,7 @@ $(document).ready(function () {
     player = new Player();
     
     var scene, renderer, camera;
+    var plane;
     
     init();
     animate();
@@ -27,9 +28,9 @@ $(document).ready(function () {
             transparent: true, 
             opacity: 0.5
         });
-        var plane = new THREE.Mesh( geometry, material );
+        plane = new THREE.Mesh( geometry, material );
         plane.rotation.x = Math.PI / 2;
-        scene.add( plane );
+        scene.add(plane);
 
         var axes = new THREE.AxesHelper(1000)
         scene.add(axes);
@@ -85,14 +86,14 @@ $(document).ready(function () {
         var mouseVector = new THREE.Vector2()
 
         $(document).mousedown(function (event) {
-            //if(event.button == 2)
             {
+                console.log("hehe")
                 mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
                 mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
                 
                 raycaster.setFromCamera(mouseVector, camera);
                 
-                var intersects = raycaster.intersectObjects(scene.children);
+                var intersects = raycaster.intersectObject(plane);
         
                 if (intersects.length > 0) {
         
@@ -106,10 +107,7 @@ $(document).ready(function () {
                 
                 let distance = player.getPlayerCont().position.clone().distanceTo(clickedVect);
                 let posX = Math.abs(player.getPlayerCont().position.x) + distance;
-                let posZ = Math.abs(player.getPlayerCont().position.x) + distance;
-                //console.log(clickedVect);
-                //console.log()
-                let i = 0;
+                let posZ = Math.abs(player.getPlayerCont().position.z) + distance;
 
                 var angle = Math.atan2
                 (
@@ -120,29 +118,26 @@ $(document).ready(function () {
                 console.log(player.getPlayerCont())
                 player.getPlayerMesh().rotation.y = angle;
                 player.getPlayerAxes().rotation.y = angle;
-                
-                function render() {      
-                    if(i < distance) 
-                    {
-                        requestAnimationFrame(render);
-                        i++;
-                        console.log(i);
-                        console.log(distance)
-                    }
-                    player.getPlayerCont().translateOnAxis(directionVect, 1)
-                    //console.log(clickedVect);
-                    //console.log(player.getPlayerCont().position)
-                    camera.position.x = player.getPlayerCont().position.x
-                    camera.position.z = player.getPlayerCont().position.z + 50
-                    camera.position.y = player.getPlayerCont().position.y + 50
-                    camera.lookAt(player.getPlayerCont().position)
-                    renderer.render(scene, camera);
+                console.log(directionVect);  
                 }
-                render()
-                }
-            }
-            
+            }  
         })
+        function render() 
+        {
+            requestAnimationFrame(render);
+            if((Math.abs(sphere.position.x - player.getPlayerCont().position.x)>4||Math.abs(sphere.position.z - player.getPlayerCont().position.z)>4))//i < distance) 
+            {
+                player.getPlayerCont().translateOnAxis(directionVect, 1);
+            }
+                    
+                    
+            camera.position.x = player.getPlayerCont().position.x;
+            camera.position.z = player.getPlayerCont().position.z + 50;
+            camera.position.y = player.getPlayerCont().position.y + 50;
+            camera.lookAt(player.getPlayerCont().position);
+            renderer.render(scene, camera);
+        }
+        //render()
     }    
     function animate()
     {

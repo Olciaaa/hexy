@@ -44,7 +44,7 @@ $(document).ready(function () {
             let allies = ally.clone().children[0];
             allies.position.x = x;
             allies.position.z = z;
-            console.log(allies.position)
+            //console.log(allies.position)
             scene.add(allies);
         }
 
@@ -59,6 +59,7 @@ $(document).ready(function () {
 
     function moving()
     {
+        let pressing = false;
         var clickedAllies = [];
         clickedAllies[0] = player.getPlayerCont();
         var geometry = new THREE.SphereGeometry(1,10,10);
@@ -80,86 +81,75 @@ $(document).ready(function () {
         var raycaster = new THREE.Raycaster();
         var mouseVector = new THREE.Vector2()
 
-        $(document).mousedown(function (event) {
-            //if(event.button == 2)
-            {
-                mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
-                mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
-                
-                raycaster.setFromCamera(mouseVector, camera);
-                
-                var intersects = raycaster.intersectObjects(scene.children, true);
-                console.log(scene.children)
-        
-                if (intersects.length > 0) {
-                console.log(intersects[0].object.geometry)
-                if(intersects[0].object.geometry.type == "SphereGeometry")
+        $(document).mousedown(function (e) 
+        {
+            pressing = true;
+            //$(document).mousemove(function (event) 
+            //{
+                if(pressing == true)
                 {
-                    let clickedMesh = intersects[0].object;
-                    //clickedMesh.position.x = player.getPlayerCont().position.x;
-                    //clickedMesh.position.z = player.getPlayerCont().position.z;
-                    //player.container.add(clickedMesh)
-                    clickedAllies.push(clickedMesh);
-                }
-                else if(intersects[0].object.geometry.type == "PlaneGeometry")
-                {
-                    clickedVect = intersects[0].point
-                    //console.log(clickedVect)
+                    mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
+                    mouseVector.y = -(event.clientY / $(window).height()) * 2 + 1;
+                    
+                    raycaster.setFromCamera(mouseVector, camera);
+                    
+                    var intersects = raycaster.intersectObjects(scene.children, true);
             
-                    directionVect = clickedVect.clone().sub(player.getPlayerCont().position).normalize() // sub - > odejmij pozycję playera od pozycji kliknięcia
-                    sphere.position.x = clickedVect.x ;
-                    sphere.position.z = clickedVect.z;
-                    
-                    let distance = player.getPlayerCont().position.clone().distanceTo(clickedVect);
-                    let posX = Math.abs(player.getPlayerCont().position.x) + distance;
-                    let posZ = Math.abs(player.getPlayerCont().position.x) + distance;
-                    //console.log(clickedVect);
-                    //console.log()
-                    let i = 0;
-
-                    var angle = Math.atan2
-                    (
-                        -player.getPlayerCont().position.clone().x + clickedVect.x,
-                        -player.getPlayerCont().position.clone().z + clickedVect.z
-                    )
-                    //console.log(angle);
-                    //console.log(player.getPlayerCont())
-                    player.getPlayerMesh().rotation.y = angle;
-                    player.getPlayerAxes().rotation.y = angle;
-                    
-                    function render() {      
-                        if(i < distance) 
-                        {
-                            requestAnimationFrame(render);
-                            i++;
-                        }
-                        player.getPlayerCont().translateOnAxis(directionVect, 1)
-                        for(let i =1; i<clickedAllies.length;i++)
-                        {
-                            directionVect1 = clickedAllies[i-1].position.clone().sub(clickedAllies[i].position).normalize();
-                            clickedAllies[i].translateOnAxis(directionVect1, 0.8 - 0.1*i);
-                        }
-                        /*clickedAllies.forEach(element => {
-                            directionVect1 = player.getPlayerCont().position.clone().sub(element.position).normalize()
-                            element.translateOnAxis(directionVect1, 0.9)
-                        });*/
-                        
-                        //console.log(clickedVect);
-                        //console.log(player.getPlayerCont().position)
-                        camera.position.x = player.getPlayerCont().position.x
-                        camera.position.z = player.getPlayerCont().position.z + 50
-                        camera.position.y = player.getPlayerCont().position.y + 50
-                        camera.lookAt(player.getPlayerCont().position)
-                        renderer.render(scene, camera);
+                    if (intersects.length > 0) 
+                    {
+                // console.log(intersects[0].object.geometry)
+                    if(intersects[0].object.geometry.type == "SphereGeometry")
+                    {
+                        let clickedMesh = intersects[0].object;
+                        clickedMesh.material.color.set( 0x0BFCF8 );
+                        clickedAllies.push(clickedMesh);
                     }
-                    render()
-                    }
+                    else if(intersects[0].object.geometry.type == "PlaneGeometry")
+                    {
+                        clickedVect = intersects[0].point
+                
+                        directionVect = clickedVect.clone().sub(player.getPlayerCont().position).normalize() // sub - > odejmij pozycję playera od pozycji kliknięcia
+                        sphere.position.x = clickedVect.x;
+                        sphere.position.z = clickedVect.z;
 
+                        var angle = Math.atan2
+                        (
+                            -player.getPlayerCont().position.clone().x + clickedVect.x,
+                            -player.getPlayerCont().position.clone().z + clickedVect.z
+                        )
+                        player.getPlayerMesh().rotation.y = angle;
+                        player.getPlayerAxes().rotation.y = angle;
+                        render()
+                        }
+                    }  
                 }
+            //})
+        })
+        $(document).mouseup(function (e) {
+            pressing = false;
+        })
+        function render() {   
+            if((Math.abs(sphere.position.x - player.getPlayerCont().position.x)>4||Math.abs(sphere.position.z - player.getPlayerCont().position.z)>4))//i < distance) 
+            {
+                requestAnimationFrame(render);
+            }   
+            player.getPlayerCont().translateOnAxis(directionVect, 1)
+            for(let i =1; i<clickedAllies.length;i++)
+            {
+                directionVect1 = clickedAllies[i-1].position.clone().sub(clickedAllies[i].position).normalize();
+                //console.log(directionVect1)
+                if((Math.abs(clickedAllies[i-1].position.x - clickedAllies[i].position.x)>4)||(Math.abs(clickedAllies[i-1].position.z - clickedAllies[i].position.z))>4)//i < distance) 
+                {
+                    clickedAllies[i].translateOnAxis(directionVect1, 0.95);
+                } 
                 
             }
-            
-        })
+            camera.position.x = player.getPlayerCont().position.x
+            camera.position.z = player.getPlayerCont().position.z + 50
+            camera.position.y = player.getPlayerCont().position.y + 50
+            camera.lookAt(player.getPlayerCont().position)
+            renderer.render(scene, camera);
+        }
     }    
     function animate()
     {

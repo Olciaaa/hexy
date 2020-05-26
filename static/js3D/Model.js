@@ -2,7 +2,9 @@ class Model {
 
     constructor(){     
        this.container = new THREE.Object3D()
-       this.mixer = null
+       this.mixer = null;
+       this.clock = new THREE.Clock();
+       this.model;
     }   
  
     loadModel(url, callback) 
@@ -12,13 +14,11 @@ class Model {
          var loader = new THREE.JSONLoader();
          var modelMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("player/tris.jpg"),
+                map: new THREE.TextureLoader().load("player/sydney.jpg"),
                 morphTargets: true // ta własność odpowiada za możliwość animowania materiału modelu
             });
  
-         loader.load(url, function (geometry) {
-
-            console.log("tralala");
+         loader.load(url, (geometry) =>{
             var meshModel = new THREE.Mesh(geometry, modelMaterial)
             meshModel.name = "name";
             meshModel.rotation.y = Math.PI/2; // ustaw obrót modelu
@@ -26,36 +26,36 @@ class Model {
             meshModel.position.x = 0;
             meshModel.position.z = 0;
             meshModel.scale.set(1,1,1); // ustaw skalę modelu
- 
-         // ładowanie modelu jak poprzednio
- 
-         //utworzenie mixera jak poprzednio
-             
-             //dodanie modelu do kontenera (na poprzednich zajęciach był to testowy sześcian)
-             var axes = new THREE.AxesHelper(200) // osie konieczne do kontroli kierunku ruchu
+            
+            var axes = new THREE.AxesHelper(0) // osie konieczne do kontroli kierunku ruchu
  
             container.add(axes)
              
-             container.add(meshModel)
+             container.add(meshModel);
              //container.rotation.y = Math.PI/2;
              // zwrócenie kontenera
  
              callback(container); 
- 
+             //this.model = meshModel;
          });
      }
  
  
     // update mixera
  
-     updateModel () {
+    updateModel () {
+        //console.log(this.model)
+        var delta = this.clock.getDelta();
          if (this.mixer) this.mixer.update(delta)
      }
  
     //animowanie postaci
  
-     setAnimation () {
-         this.mixer.clipAction("run").play();
+     setAnimation (action) 
+     {
+
+        this.mixer.clipAction(action).play();
+
      }
  
  }

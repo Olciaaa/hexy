@@ -19,6 +19,12 @@ var Settings = {
         shininess: 50,
         transparent: false
     }),
+    ringMaterial:new THREE.MeshBasicMaterial({
+        color: 0x8768ff,
+        side: THREE.DoubleSide,
+        wireframe: true,
+        transparent: false
+    }),
 
     radius: 60
 }
